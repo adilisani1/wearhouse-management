@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { Suspense, useState, useEffect } from "react";
 import PackingScreen from "@/components/PackingScreen";
 import Sidebar from "@/components/sidebar/Sidebar";
 import { useSearchParams } from 'next/navigation';
@@ -49,9 +49,9 @@ const PackingPage = () => {
         <Sidebar />
       </div>
       <div className="w-[86%] md:w-[92%] lg:w-[84%] xl:w-[86%] bg-blue-50">
-        {orderData && (
-          <PackingScreen orderData={orderData} onPackItem={handlePackItem} initialFilter={filterFromUrl} />
-        )}
+        <Suspense fallback={<div>Loading...</div>}>
+          {orderData && <PackingScreen orderData={orderData} initialFilter={filterFromUrl} />}
+        </Suspense>
       </div>
     </div>
   );
