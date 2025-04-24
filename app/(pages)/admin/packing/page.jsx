@@ -3,12 +3,14 @@ import React, { Suspense, useState, useEffect } from "react";
 import PackingScreen from "@/components/PackingScreen";
 import Sidebar from "@/components/sidebar/Sidebar";
 import { useSearchParams } from 'next/navigation';
+import Loading from "@/components/Loading";
 
 const PackingPage = () => {
   const params = useSearchParams();
   const filterFromUrl = params.get('filter') || "";
   const [orderData, setOrderData] = useState([]);
-  
+
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -49,7 +51,7 @@ const PackingPage = () => {
         <Sidebar />
       </div>
       <div className="w-[86%] md:w-[92%] lg:w-[84%] xl:w-[86%] bg-blue-50">
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<Loading />}> 
           {orderData && <PackingScreen orderData={orderData} initialFilter={filterFromUrl} handlePackItem={handlePackItem} />}
         </Suspense>
       </div>
