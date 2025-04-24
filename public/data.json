@@ -1,0 +1,42 @@
+{
+  "client": "Client Testing",
+  "orderOrigin": "Freelance",
+  "orderNumber": "RH801970502CN",
+  "items": [
+    {
+      "sku": "696954",
+      "description": "The Multi-location Snowboard",
+      "quantity": 1,
+      "status": "pending",
+      "toteBox": "090000"
+    },
+    {
+      "sku": "123456",
+      "description": "Premium Winter Jacket",
+      "quantity": 2,
+      "status": "pending",
+      "toteBox": "090000"
+    },
+    {
+      "sku": "789012",
+      "description": "Ski Goggles Pro",
+      "quantity": 4,
+      "status": "pending",
+      "toteBox": "100002"
+    },
+    {
+      "sku": "345678",
+      "description": "Winter Gloves Deluxe",
+      "quantity": 5,
+      "status": "pending",
+      "toteBox": "100003"
+    },
+    {
+      "sku": "901234",
+      "description": "Thermal Base Layer Set",
+      "quantity": 3,
+      "status": "pending",
+      "toteBox": "100004"
+    }
+  ]
+}
