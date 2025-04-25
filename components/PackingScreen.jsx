@@ -5,67 +5,43 @@ import { Input } from './ui/input';
 import { Table, TableHeader, TableHead, TableBody, TableRow, TableCell } from './ui/table';
 import { Badge } from './ui/badge';
 import { UserRoundIcon, Box, Tag } from 'lucide-react';
+import { useSearchParams, useRouter } from 'next/navigation';
 
 
 const PackingScreen = ({
   orderData,
   onPackItem,
-  initialFilter = "",
 }) => {
   const [localOrderData, setLocalOrderData] = useState(orderData);
   const [filteredItems, setFilteredItems] = useState(orderData.items);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const initialFilter = searchParams.get('filter') || "";
   const [skuInput, setSkuInput] = useState(initialFilter);
+
+  useEffect(() => {
+    if (initialFilter) {
+      const items = orderData?.items?.filter(item =>
+        item.sku.includes(initialFilter) || item.toteBox.includes(initialFilter)
+      );
+      setFilteredItems(items);
+    } else {
+      setFilteredItems(orderData.items);
+    }
+  }, [orderData, initialFilter]); 
 
   useEffect(() => {
     setLocalOrderData(orderData);
   }, [orderData]);
 
-  // useEffect(() => {
-  //   setSkuInput(initialFilter);
-
-  //   const itemsToFilter = orderData.items;
-  //   if (!initialFilter) {
-  //     setFilteredItems(itemsToFilter);
-  //   } else {
-  //     setFilteredItems(
-  //       itemsToFilter?.filter(item =>
-  //         item.sku.includes(initialFilter) ||
-  //         item.toteBox.includes(initialFilter)
-  //       )
-  //     );
-  //   }
-  // }, []);
-
-  useEffect(() => {
-    if (!orderData?.items || orderData.items.length === 0) return;
-
-    let items = orderData.items;
-
-    if (initialFilter) {
-      setSkuInput(initialFilter);
-      items = items.filter(item =>
-        item.sku.includes(initialFilter) ||
-        item.toteBox.includes(initialFilter)
-      );
-    }
-
-    setFilteredItems(items);
-  }, [orderData, initialFilter]);
-
-
-
   const handleInputChange = (e) => {
     const query = e.target.value;
     setSkuInput(query);
-
-    setFilteredItems(
-      !query
-        ? localOrderData.items
-        : localOrderData.items.filter(item =>
-            item.sku.includes(query) ||
-            item.toteBox.includes(query)
-          )
-    );
+    if (!query) {
+      router.push('/admin/packing');
+    } else {
+      router.push(`/admin/packing?filter=${encodeURIComponent(query)}`);
+    }
   };
 
   const handlePackItem = (sku) => {

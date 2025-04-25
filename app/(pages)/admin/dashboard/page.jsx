@@ -20,8 +20,8 @@ import Loading from '@/components/Loading';
 
 
    const handleSearch = (q) => {
-    const encoded = encodeURIComponent(q.trim());
-    router.push(`/admin/packing?filter=${encoded}`);
+     const encoded = encodeURIComponent(q.trim());
+     router.push(`/admin/packing?filter=${encoded}`);
    };
 
    return (
@@ -30,14 +30,14 @@ import Loading from '@/components/Loading';
          <Sidebar />
        </div>
        <div className="w-[86%] md:w-[92%] lg:w-[84%] xl:w-[86%] bg-blue-50">
-         <Suspense fallback={<Loading />}>
-           {orderData && (
+         {orderData && (
+           <Suspense fallback={<Loading />}>
              <DashboardScreen
                orderData={orderData}
                onSearch={handleSearch}
              />
-           )}
-         </Suspense>
+           </Suspense>
+         )}
        </div>
      </div>
    );
