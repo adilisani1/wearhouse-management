@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 export default function DashboardLayout({ children }) {
@@ -10,8 +10,8 @@ export default function DashboardLayout({ children }) {
   }, []);
 
   return (
-    <div>
-      {children}
-    </div>
+    <Suspense>
+      <div>{children}</div>;
+    </Suspense>
   );
 }
