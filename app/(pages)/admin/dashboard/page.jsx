@@ -1,8 +1,9 @@
 "use client";
 import Sidebar from '@/components/sidebar/Sidebar'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Suspense } from 'react'
 import DashboardScreen from '@/components/DashboardScreen'
 import { useRouter } from 'next/navigation';
+import Loading from '@/components/Loading';
 
  const Dashboard = () => {
    const router = useRouter();
@@ -21,7 +22,7 @@ import { useRouter } from 'next/navigation';
    const handleSearch = (q) => {
     const encoded = encodeURIComponent(q.trim());
     router.push(`/admin/packing?filter=${encoded}`);
-     };
+   };
 
    return (
      <div className="min-h-screen flex">
@@ -29,12 +30,14 @@ import { useRouter } from 'next/navigation';
          <Sidebar />
        </div>
        <div className="w-[86%] md:w-[92%] lg:w-[84%] xl:w-[86%] bg-blue-50">
-         {orderData && (           
+         <Suspense fallback={<Loading />}>
+           {orderData && (
              <DashboardScreen
                orderData={orderData}
                onSearch={handleSearch}
-             />          
-         )}
+             />
+           )}
+         </Suspense>
        </div>
      </div>
    );

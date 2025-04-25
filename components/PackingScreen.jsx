@@ -20,21 +20,39 @@ const PackingScreen = ({
     setLocalOrderData(orderData);
   }, [orderData]);
 
-  useEffect(() => {
-    setSkuInput(initialFilter);
+  // useEffect(() => {
+  //   setSkuInput(initialFilter);
 
-    const itemsToFilter = orderData.items;
-    if (!initialFilter) {
-      setFilteredItems(itemsToFilter);
-    } else {
-      setFilteredItems(
-        itemsToFilter?.filter(item =>
-          item.sku.includes(initialFilter) ||
-          item.toteBox.includes(initialFilter)
-        )
+  //   const itemsToFilter = orderData.items;
+  //   if (!initialFilter) {
+  //     setFilteredItems(itemsToFilter);
+  //   } else {
+  //     setFilteredItems(
+  //       itemsToFilter?.filter(item =>
+  //         item.sku.includes(initialFilter) ||
+  //         item.toteBox.includes(initialFilter)
+  //       )
+  //     );
+  //   }
+  // }, []);
+
+  useEffect(() => {
+    if (!orderData?.items || orderData.items.length === 0) return;
+
+    let items = orderData.items;
+
+    if (initialFilter) {
+      setSkuInput(initialFilter);
+      items = items.filter(item =>
+        item.sku.includes(initialFilter) ||
+        item.toteBox.includes(initialFilter)
       );
     }
+
+    setFilteredItems(items);
   }, [orderData, initialFilter]);
+
+
 
   const handleInputChange = (e) => {
     const query = e.target.value;
