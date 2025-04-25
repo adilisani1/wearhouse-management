@@ -49,14 +49,15 @@ const PackingPage = () => {
         <Sidebar />
       </div>
       <div className="w-[86%] md:w-[92%] lg:w-[84%] xl:w-[86%] bg-blue-50">
-        <Suspense fallback={<Loading />}>
-          {orderData &&
+        {orderData &&
+          <Suspense fallback={<Loading />}>
+
             <PackingScreen
               orderData={orderData}
               initialFilter={filterFromUrl}
               onPackItem={handlePackItem} />
-          }
-        </Suspense>
+          </Suspense>
+        }
       </div>
     </div>
   );
